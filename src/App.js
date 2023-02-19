@@ -4,13 +4,14 @@ import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-
+import axios from 'axios'
 // components
 import { Card } from './components/card.js';
 import { Detail } from './components/detail'
 
 function App() {
-    let [shoes] = useState(data)
+    let [shoes, setShoes] = useState(data)
+    let [more, setMore] = useState(2)
     let navigate = useNavigate();
 
     return (
@@ -39,6 +40,16 @@ function App() {
                                 })
                                 }
                             </Row>
+                            <button onClick={() => {
+                                axios.get('https://codingapple1.github.io/shop/data' + more + '.json').then((res) => {
+                                    var copy = [...shoes, ...res.data];
+                                    // res.data.map(function (item, i) {
+                                    //     copy.push(item)
+                                    // })
+                                    setShoes(copy)
+                                })
+                                setMore(more + 1);
+                            }}>더보기</button>
                         </Container>
                     </>
 

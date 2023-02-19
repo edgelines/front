@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -14,6 +14,8 @@ export function Detail(props) {
             setEvent(false)
         }, 2000)
     }, [])
+    // 디팬던시 안에 변수가 있으면, 변수가 업데이트 될때마다 업데이트됨, 그 안에 아무것도 없으면 첫 랜더링시에만 업데이트됨
+
     // useEffect(() => {
     //    const time =  setTimeout(() => { setEvent(false) }, 2000)
     // return () => {
@@ -45,7 +47,20 @@ export function Detail(props) {
                     <BtnCustom bg="dodgerblue" onClick={() => { setCount(count + 1) }} >주문하기</BtnCustom>
                 </Col>
 
-                count : {count}
+                <Nav variant="tabs" defaultActiveKey="link0">
+                    <Nav.Item>
+                        <Nav.Link eventKey="link0">버튼0</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="link1">버튼1</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="link2">버튼2</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                <div>내용0</div>
+                <div>내용1</div>
+                <div>내용2</div>
             </Row>
         </Container>
     )
