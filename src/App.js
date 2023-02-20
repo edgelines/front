@@ -6,8 +6,9 @@ import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios'
 // components
-import { Card } from './components/card.js';
+import { Card } from './components/card.jsx';
 import { Detail } from './components/detail'
+import { Cart } from './components/Cart'
 
 function App() {
     let [shoes, setShoes] = useState(data)
@@ -16,7 +17,7 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="light" variant="dark">
                 <Container>
                     <Navbar.Brand href="/">Parctice</Navbar.Brand>
                     <Nav className="me-auto">
@@ -25,6 +26,7 @@ function App() {
                         <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
                         <Nav.Link onClick={() => { navigate('/about/member') }}>Member</Nav.Link>
                         <Nav.Link onClick={() => { navigate('/about/location') }}>Location</Nav.Link>
+                        <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
@@ -36,7 +38,13 @@ function App() {
                         <Container>
                             <Row>
                                 {shoes.map(function (item, i) {
-                                    return (<Card shoes={shoes[i]} key={i} />)
+                                    return (
+                                        <Col xs="4" key={i}>
+                                            <Nav.Link href={`/detail/${i}`} className="Card-ID">
+                                                <Card shoes={shoes[i]} />
+                                            </Nav.Link>
+                                        </Col>
+                                    )
                                 })
                                 }
                             </Row>
@@ -60,8 +68,8 @@ function App() {
                 <Route path="/about" element={<About />}>
                     <Route path="member" element={<div>Outlet</div>} />
                     <Route path="location" element={<div>Location</div>} />
-
                 </Route>
+                <Route path="/cart" element={<Cart />} />
             </Routes>
         </div>
     );

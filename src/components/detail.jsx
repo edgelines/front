@@ -30,16 +30,17 @@ export function Detail(props) {
     let 찾은상품 = props.shoes.find(function (x) {
         return x.id == id
     });
+    let [content, setContent] = useState(0)
     // let 찾은상품 = props.shoes.find(x => x.id == id);
     return (
-        <Container>
+        <Container className='mt-5'>
             {event ? <Alert /> : null}
             <Row>
-                <Col md="6">
+                <Col xs="8" md="7">
                     <img src={찾은상품.img} className='img-fluid' />
                 </Col>
 
-                <Col md="6">
+                <Col xs md="5">
                     <h4>{찾은상품.title}</h4>
                     <p>{찾은상품.content}</p>
                     <p>{(찾은상품.price).toLocaleString('KR')} 원</p>
@@ -49,21 +50,44 @@ export function Detail(props) {
 
                 <Nav variant="tabs" defaultActiveKey="link0">
                     <Nav.Item>
-                        <Nav.Link eventKey="link0">버튼0</Nav.Link>
+                        <Nav.Link eventKey="link0" onClick={() => { setContent(0) }}>버튼0</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="link1">버튼1</Nav.Link>
+                        <Nav.Link eventKey="link1" onClick={() => { setContent(1) }} >버튼1</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="link2">버튼2</Nav.Link>
+                        <Nav.Link eventKey="link2" onClick={() => { setContent(2) }} >버튼2</Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <div>내용0</div>
-                <div>내용1</div>
-                <div>내용2</div>
+
+                <Content content={content} />
             </Row>
         </Container>
     )
+}
+
+// function Content(props) {
+//     if (props.content == 0) {
+//         return <div >내용0</div>
+//     } else if (props.content == 1) {
+//         return <div>내용1</div>
+//     } else if (props.content == 2) {
+//         return <div>내용2</div>
+//     }
+// }
+function Content({ content }) {
+    let [fade, setFade] = useState('')
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            setFade('end')
+        }, 1000)
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [content])
+    return (<div className={`start ${fade}`}>
+        {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][content]}
+    </div>)
 }
 
 function Alert() {

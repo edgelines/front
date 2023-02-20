@@ -11,8 +11,20 @@
 
 }
 
-/* 
 a {
   text-decoration: none !important;
-  color: aliceblue !important;
-} */
+  color: black !important;
+}
+
+.Card-ID {
+  display: inline-block;
+}
+
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: opactiy 1.5s;
+}
