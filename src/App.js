@@ -1,66 +1,102 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
+import { Button, Container, Nav, Navbar, Row, Col, NavDropdown, Offcanvas, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios'
+import ImageGallery from 'react-image-gallery';
+
 // components
+import NavbarEx from './components/Navbar'
 import { Card } from './components/card.jsx';
 import { Detail } from './components/detail'
 import { Cart } from './components/Cart'
 
 function App() {
+
+    const homeImgSlider = [
+        {
+            original: './img/Main/1.jpg',
+            thumbnail: './img/Main/1.jpg',
+        },
+        {
+            original: './img/Main/2.jpg',
+            thumbnail: './img/Main/2.jpg',
+        },
+        {
+            original: './img/Main/3.jpg',
+            thumbnail: './img/Main/3.jpg',
+        },
+        {
+            original: './img/Main/4.jpg',
+            thumbnail: './img/Main/4.jpg',
+        },
+        {
+            original: './img/Main/5.jpg',
+            thumbnail: './img/Main/5.jpg',
+        },
+        {
+            original: './img/Main/6.jpg',
+            thumbnail: './img/Main/6.jpg',
+        },
+        {
+            original: './img/Main/7.jpg',
+            thumbnail: './img/Main/7.jpg',
+        },
+    ];
+
     let [shoes, setShoes] = useState(data)
     let [more, setMore] = useState(2)
     let navigate = useNavigate();
 
     return (
         <div className="App">
-            <Navbar bg="light" variant="dark">
-                <Container>
-                    <Navbar.Brand href="/">Parctice</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-                        <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link>
-                        <Nav.Link onClick={() => { navigate('/about') }}>About</Nav.Link>
-                        <Nav.Link onClick={() => { navigate('/about/member') }}>Member</Nav.Link>
-                        <Nav.Link onClick={() => { navigate('/about/location') }}>Location</Nav.Link>
-                        <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
-                    </Nav>
+            <Navbar bg="white" expand='xl' className="mb-3">
+                <Container fluid>
+                    <Navbar.Brand id="nav-font-Brand" href="/">HIJO NAM</Navbar.Brand>
+                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${'xl'}`} />
+                    <Navbar.Offcanvas
+                        id={`offcanvasNavbar-expand-${'xl'}`}
+                        aria-labelledby={`offcanvasNavbarLabel-expand-${'xl'}`}
+                        placement="end"
+                    >
+                        <Offcanvas.Header closeButton>
+                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${'xl'}`}>
+                                Offcanvas
+                            </Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <Offcanvas.Body>
+                            <Nav className="flex-grow-1 nav-list">
+                                <Nav.Link className='nav-font' onClick={() => { navigate('/') }}>BIO</Nav.Link>
+                                <Nav.Link className='nav-font' onClick={() => { navigate('/detail') }}>ARTWORKS</Nav.Link>
+                                <NavDropdown className='nav-font' title="EXHIBITION" id="nav-dropdown">
+                                    <NavDropdown.Item className='nav-font' onClick={() => { navigate('/about/member') }}>Past Exhibition</NavDropdown.Item>
+                                    <NavDropdown.Item className='nav-font' onClick={() => { navigate('/about/location') }}>Upcoming Exhibition</NavDropdown.Item>
+                                </NavDropdown>
+                                <Nav.Link className='nav-font' onClick={() => { navigate('/cart') }}>PORTFOLIO</Nav.Link>
+                            </Nav>
+                            <Form className="d-flex sns">
+                                <img class="me-5" src="./img/Etc/facebook.png" />
+                                <img class="me-5" src="./img/Etc/instagram.png" />
+                                <img class="me-5" src="./img/Etc/mail.png" />
+                            </Form>
+                        </Offcanvas.Body>
+                    </Navbar.Offcanvas>
                 </Container>
             </Navbar>
+
 
             <Routes>
                 <Route path='/' element={
                     <>
-                        <div className='main-bg'></div>
-                        <Container>
-                            <Row>
-                                {shoes.map(function (item, i) {
-                                    return (
-                                        <Col xs="4" key={i}>
-                                            <Nav.Link href={`/detail/${i}`} className="Card-ID">
-                                                <Card shoes={shoes[i]} />
-                                            </Nav.Link>
-                                        </Col>
-                                    )
-                                })
-                                }
-                            </Row>
-                            <button onClick={() => {
-                                axios.get('https://codingapple1.github.io/shop/data' + more + '.json').then((res) => {
-                                    var copy = [...shoes, ...res.data];
-                                    // res.data.map(function (item, i) {
-                                    //     copy.push(item)
-                                    // })
-                                    setShoes(copy)
-                                })
-                                setMore(more + 1);
-                            }}>더보기</button>
-                        </Container>
+                        <div className='mt-3'>
+                            <ImageGallery
+                                items={homeImgSlider} autoPlay={true} slideDuration={15000} slideInterval={3500}
+                                showNav={false} showPlayButton={false} showThumbnails={false} showFullscreenButton={false}
+                            />
+                        </div>
                     </>
-
                 } />
 
                 <Route path="/detail/:id" element={<Detail shoes={shoes} />} />

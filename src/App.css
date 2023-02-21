@@ -1,4 +1,12 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=Crimson+Text&family=Nunito+Sans:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Nunito+Sans:wght@600;700;900&display=swap');
+
+
 .App {
+  font-family: 'Crimson Text', serif, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
 
@@ -27,4 +35,41 @@ a {
 .end {
   opacity: 1;
   transition: opactiy 1.5s;
+}
+
+.sns {
+  margin-top: 12px;
+  height: 27px;
+}
+
+
+@media (min-width : 1100px) {
+  #nav-font-Brand {
+    /* color: black !important; */
+    /* text-decoration: none !important; */
+    /* font-family: 'Crimson Text', serif; */
+    font-weight: 800;
+    font-size: 33px;
+    margin-left: 90px;
+    margin-right: 220px;
+  }
+
+  .nav-list {
+    /* color: black !important;
+    text-decoration: none !important; */
+    /* font-family: 'Crimson Text', serif; */
+    /* font-weight: 600; */
+    font-size: 22px;
+    margin-top: 5px !important;
+
+  }
+
+  .nav-list>.nav-font {
+    margin-right: 50px;
+  }
+
+  .sns {
+    margin-top: 12px;
+    height: 27px;
+  }
 }
